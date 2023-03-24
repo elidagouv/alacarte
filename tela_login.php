@@ -1,3 +1,22 @@
+<?php
+if(isset($_POST['email'])) {
+
+  include("conexao.php");
+  
+  $email = $_POST['email'];
+  $senha = $_POST['senha'];
+
+  $sql_code = "SELECT * FROM senha WHERE email = '$email' LIMIT 1";
+  $sql_exec = $mysqli->query($sql_code) or die($mysqli ->error);
+
+  $usuario = $sql_exec -> fetch_assoc();
+  if(password_verify($senha, $usuario['senha'])){
+    echo "Usuario logado!";
+  }else{
+    echo "falha ao logar! senha ou e-mail incorretos";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -22,10 +41,13 @@
         <div id="login">
             <div id="conteudo_login">
                 <h1>Login</h1>
-                <form action="">
+                <!--Coloquei o metodo POST para fazer a validação-->
+                <form action="" method="post">
                     <div id="inputs_login">
-                        <input type="email" class="input" placeholder="Email" id="input_email">
-                        <input type="password" class="input" placeholder="Senha" id="input_senha">
+                        <!--Coloquei o ("name="email")-->
+                        <input type="email" class="input" placeholder="Email" id="input_email" name="email">
+                        <!--Coloquei o ("name="senha")-->
+                        <input type="password" class="input" placeholder="Senha" id="input_senha" name="senha">
                     </div>
                     <div id="input_enviar">
                         <input type="submit" id="ipt_enviar" value="Login">
