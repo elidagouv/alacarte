@@ -1,3 +1,17 @@
+<?php
+if(isset($_POST['email'])){
+    include('conexao.php');
+    $email = $_POST['email'];
+    $senha = password_hash($_POST['senha'],PASSWORD_DEFAULT);
+
+    
+    
+    
+    $mysqli -> query("INSERT INTO senha(email, senha)VALUES('$email', '$senha')");
+  }
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -22,10 +36,13 @@
         <div id="criar">
             <div id="conteudo_criar">
                 <h1>Criar conta</h1>
-                <form action="">
+                <!--Coloquei o metodo POST para fazer a validação-->
+                <form action="" method="post">
                     <div id="inputs_criar">
-                        <input type="email" class="input" placeholder="Email" id="input_email">
-                        <input type="password" class="input" placeholder="Senha" id="input_senha">
+                        <!--Coloquei o ("name="email")-->
+                        <input type="email" class="input" placeholder="Email" id="input_email" name="email">
+                        <!--Coloquei o ("name="senha")-->
+                        <input type="password" class="input" placeholder="Senha" id="input_senha" name="senha">
                     </div>
                     <div id="input_enviar">
                         <input type="submit" id="ipt_enviar" value="Criar conta">
